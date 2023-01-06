@@ -29,10 +29,14 @@
    destfile: /etc/kibana/kibana.yml
    regexp: 'elasticsearch.hosts:'
    line: 'elasticsearch.hosts: "http://localhost:9200"'
+
+  notify:
+    - restart Kibana
+
    
 # Starting Kibana
 
-- name: Starting Kibana
-  service:
-   name: kibana
-   state: started
+# - name: Starting Kibana
+#  service:
+#   name: kibana
+#   state: started

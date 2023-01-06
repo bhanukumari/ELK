@@ -1,4 +1,20 @@
 ---
+- name: install elasticsearch on Debian
+  apt:
+    name: elasticsearch
+    state: present
+    update_cache: yes
+  notify: statrting elasticsearch after installation
+  when: ansible_distribution_file_variety == "Debian"
+
+- name: install elasticsearch on RedHat
+  yum:
+     name: elasticsearch
+     state: present
+     update_cache: yes
+  notify: statrting elasticsearch after installation
+  when: ansible_distribution_file_variety == "RedHat"
+
 # tasks file for es
 - name: Add Elasticsearch apt key
   apt_key:
@@ -47,8 +63,11 @@
    regexp: 'cluster.initial_master_nodes:'
    line: 'cluster.initial_master_nodes: ["{{ ansible_default_ipv4.address }}"]'
 
+  notify: 
+    - restart elasticsearch
+
 # Start Elasticsearch
-- name: Starting Elasticsearch
-  service:
-   name: elasticsearch
-   state: started
+# - name: Starting Elasticsearch
+  #  service:
+    # name: elasticsearch
+     #  state: started
